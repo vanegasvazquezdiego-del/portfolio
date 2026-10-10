@@ -1,10 +1,60 @@
 import { useMemo } from 'react';
 import { useState } from 'react';
-import { GraduationCap, ExternalLink, Pencil, Trash2, Plus, BadgeCheck, RotateCcw } from 'lucide-react';
+import { useEffect } from 'react';
+import { GraduationCap, ExternalLink, Pencil, Trash2, Plus, BadgeCheck, RotateCcw, FileText, Download } from 'lucide-react';
 import { certificates } from '../data/certificates';
 import { projectDate } from '../data/projects';
 import { useSettings } from '../hooks/useSettings';
 import { useMyCertificates } from '../hooks/useMyCertificates';
+import { idbGet } from '../lib/idb';
+
+function CertFile({ attachment }) {
+  const [url, setUrl] = useState(attachment?.dataUrl || null);
+  const [ready, setReady] = useState(!!attachment?.dataUrl);
+
+  useEffect(() => {
+    let objectUrl = null;
+    let cancelled = false;
+    if (attachment?.dataUrl) {
+      setUrl(attachment.dataUrl);
+      setReady(true);
+      return undefined;
+    }
+    if (!attachment?.ref) {
+      setReady(false);
+      return undefined;
+    }
+    idbGet(attachment.ref)
+      .then((blob) => {
+        if (cancelled) return;
+        if (blob) {
+          objectUrl = URL.createObjectURL(blob);
+          setUrl(objectUrl);
+          setReady(true);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [attachment]);
+
+  if (!ready || !url) return null;
+  return (
+    <a
+      href={url}
+      download={attachment.name}
+      onClick={(e) => e.stopPropagation()}
+      className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold accent-text hover:text-glow max-w-full"
+      title={attachment.name}
+    >
+      <FileText size={13} className="shrink-0" />
+      <span className="truncate">{attachment.name}</span>
+      <Download size={13} className="shrink-0" />
+    </a>
+  );
+}
 
 export default function Certificates({ onAdd, onEdit }) {
   const [confirmDel, setConfirmDel] = useState(null);
@@ -64,7 +114,7 @@ export default function Certificates({ onAdd, onEdit }) {
               </span>
               {c.custom && <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-400 text-black font-bold shrink-0">{t.projects.mine}</span>}
             </div>
-            <h3 className="mt-3 font-bold leading-snug">{c.title}</h3>
+            <h3 className="mt-3 font-bold leading-snug">{c.title?.trim() || t.certs.untitled}</h3>
             <p className="mt-1 text-sm opacity-70 flex items-center gap-1.5">
               <BadgeCheck size={14} className="accent-text shrink-0" /> {c.issuer}
             </p>
@@ -77,6 +127,7 @@ export default function Certificates({ onAdd, onEdit }) {
               </div>
             )}
             {c.credentialId && <p className="mt-2 text-[11px] font-mono opacity-50">ID: {c.credentialId}</p>}
+            {(c.attachment?.ref || c.attachment?.dataUrl) && <CertFile attachment={c.attachment} />}
             <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between gap-2 mt-auto">
               {c.url ? (
                 <a href={c.url} target="_blank" rel="noreferrer" className="text-sm font-semibold accent-text flex items-center gap-1.5 hover:text-glow">

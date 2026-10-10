@@ -84,6 +84,7 @@ export const translations = {
       add: 'Add certificate',
       verify: 'Verify',
       showExamples: 'Show examples',
+      untitled: 'Certificate',
       emptyMine: 'No certificates yet. Click "Add certificate" to add your first one.'
     },
     certForm: {
@@ -95,7 +96,13 @@ export const translations = {
       url: 'Credential URL (optional)',
       credId: 'Credential ID (optional)',
       skills: 'Related skills',
-      required: 'Title and issuer are required.'
+      attach: 'Attach certificate file (optional, max 50 MB — stored in your browser)',
+      attachRemove: 'Remove attachment',
+      attachTooBig: 'File too big — max 50 MB.',
+      attachStoreFail: 'Could not store the file (browser storage full or blocked). Try a smaller file.',
+      saving: 'Saving…',
+      required: 'Issuer is required. Without a title it will show as "Certificate".',
+      saveCert: 'Save certificate',
     },
     editor: {
       title: 'Edit my presentation',
@@ -232,6 +239,7 @@ export const translations = {
       add: 'Agregar certificado',
       verify: 'Verificar',
       showExamples: 'Mostrar ejemplos',
+      untitled: 'Certificado',
       emptyMine: 'Aún no hay certificados. Pulsa "Agregar certificado" para añadir el primero.'
     },
     certForm: {
@@ -243,7 +251,13 @@ export const translations = {
       url: 'URL de credencial (opcional)',
       credId: 'ID de credencial (opcional)',
       skills: 'Habilidades relacionadas',
-      required: 'Título y emisor son obligatorios.'
+      attach: 'Adjuntar archivo del certificado (opcional, máx 50 MB — se guarda en tu navegador)',
+      attachRemove: 'Quitar adjunto',
+      attachTooBig: 'Archivo muy grande — máx 50 MB.',
+      attachStoreFail: 'No se pudo guardar el archivo (almacenamiento lleno o bloqueado). Prueba con uno más pequeño.',
+      saving: 'Guardando…',
+      required: 'El emisor es obligatorio. Sin título se mostrará como "Certificado".',
+      saveCert: 'Guardar certificado',
     },
     editor: {
       title: 'Editar mi presentación',

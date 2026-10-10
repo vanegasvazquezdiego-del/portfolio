@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
-import { X, Save, Plus } from 'lucide-react';
+import { X, Save, Plus, FileText, Trash2, Loader2 } from 'lucide-react';
 import { certificates } from '../data/certificates';
 import { useSettings } from '../hooks/useSettings';
 import { useMyCertificates } from '../hooks/useMyCertificates';
+import { MAX_ATTACH_BYTES } from '../hooks/useMyProjects';
+import { idbPut, idbDelete } from '../lib/idb';
 
 const inputCls = 'w-full bg-transparent border border-white/10 rounded-xl px-3 py-2 text-sm outline-none focus:shadow-glow';
 
@@ -25,6 +27,9 @@ export default function CertificateForm({ open, initial, onClose }) {
   const [credentialId, setCredentialId] = useState('');
   const [skills, setSkills] = useState([]);
   const [customSkill, setCustomSkill] = useState('');
+  const [attach, setAttach] = useState(null); // {name,type,size,file?|ref?|dataUrl?}
+  const [attachErr, setAttachErr] = useState('');
+  const [saving, setSaving] = useState(false);
 
   const todayLocal = () => {
     const d = new Date();
@@ -48,6 +53,8 @@ export default function CertificateForm({ open, initial, onClose }) {
       setCredentialId(initial?.credentialId || '');
       setSkills(initial?.skills || []);
       setCustomSkill('');
+      setAttach(initial?.attachment || null);
+      setAttachErr('');
     }
   }, [open, initial]);
 
@@ -62,21 +69,54 @@ export default function CertificateForm({ open, initial, onClose }) {
     setCustomSkill('');
   };
 
-  const valid = title.trim() !== '' && issuer.trim() !== '';
+  const valid = issuer.trim() !== '';
 
-  const save = () => {
-    if (!valid) return;
-    const data = {
-      title: title.trim(),
-      issuer: issuer.trim(),
-      date: date || '',
-      url: url.trim(),
-      credentialId: credentialId.trim(),
-      skills
-    };
-    if (initial) updateCertificate(initial.id, data);
-    else addCertificate(data);
-    onClose();
+  const onFile = (file) => {
+    setAttachErr('');
+    if (!file) return;
+    if (file.size > MAX_ATTACH_BYTES) {
+      setAttachErr(f.attachTooBig);
+      return;
+    }
+    // Kept as a File object; stored into IndexedDB on save.
+    setAttach({ name: file.name, type: file.type || 'file', size: file.size, file });
+  };
+
+  const save = async () => {
+    if (!valid || saving) return;
+    setSaving(true);
+    setAttachErr('');
+    try {
+      const id = initial?.id || `cert-${Date.now().toString(36)}`;
+      let attachment = null;
+      if (attach?.file) {
+        const ref = `att-${id}`;
+        await idbPut(ref, attach.file);
+        attachment = { name: attach.name, type: attach.type, size: attach.size, ref };
+      } else if (attach?.ref || attach?.dataUrl) {
+        attachment = attach; // unchanged existing attachment
+      } else if (initial?.attachment?.ref) {
+        await idbDelete(initial.attachment.ref).catch(() => {});
+        attachment = null;
+      }
+      const data = {
+        id,
+        title: title.trim(),
+        issuer: issuer.trim(),
+        date: date || '',
+        url: url.trim(),
+        credentialId: credentialId.trim(),
+        skills,
+        attachment
+      };
+      if (initial) updateCertificate(initial.id, data);
+      else addCertificate(data);
+      onClose();
+    } catch {
+      setAttachErr(f.attachStoreFail);
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -91,7 +131,7 @@ export default function CertificateForm({ open, initial, onClose }) {
 
           <div className="mt-5 grid gap-3">
             <Field label={f.title}>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="AWS Certified…" className={inputCls} />
+              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder={t.certs.untitled} className={inputCls} />
             </Field>
             <div className="grid sm:grid-cols-[1fr_170px] gap-3">
               <Field label={f.issuer}>
@@ -145,15 +185,34 @@ export default function CertificateForm({ open, initial, onClose }) {
                 </div>
               )}
             </div>
+            <div>
+              <span className="block text-xs font-mono uppercase tracking-wider opacity-60 mb-1">{f.attach}</span>
+              {!attach ? (
+                <input
+                  type="file"
+                  onChange={(e) => onFile(e.target.files?.[0])}
+                  className="w-full text-sm opacity-80 file:mr-3 file:px-3 file:py-1.5 file:rounded-lg file:border-0 file:accent-bg file:text-black file:font-semibold file:text-xs"
+                />
+              ) : (
+                <div className="flex items-center gap-2 glass rounded-xl px-3 py-2 text-sm">
+                  <FileText size={16} className="accent-text shrink-0" />
+                  <span className="truncate flex-1">{attach.name} <span className="opacity-50 font-mono text-xs">({Math.round(attach.size / 1024)} KB)</span></span>
+                  <button type="button" onClick={() => setAttach(null)} className="p-1 opacity-60 hover:opacity-100" aria-label={f.attachRemove}>
+                    <Trash2 size={15} />
+                  </button>
+                </div>
+              )}
+              {attachErr && <p className="mt-1 text-xs text-red-400">{attachErr}</p>}
+            </div>
           </div>
 
           <div className="mt-6 flex flex-wrap gap-3">
             <button
               onClick={save}
-              disabled={!valid}
+              disabled={!valid || saving}
               className="flex-1 min-w-40 px-4 py-2.5 rounded-xl accent-bg text-black font-semibold text-sm flex items-center justify-center gap-2 hover:shadow-glow disabled:opacity-40 disabled:shadow-none"
             >
-              <Save size={16} /> {pf.save}
+              {saving ? <><Loader2 size={16} className="animate-spin" /> {f.saving}</> : <><Save size={16} /> {f.saveCert}</>}
             </button>
             <button onClick={onClose} className="px-4 py-2.5 rounded-xl glass text-sm font-semibold hover:shadow-glow">
               {pf.cancel}

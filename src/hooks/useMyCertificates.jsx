@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { idbDelete } from '../lib/idb';
 
 // User-added certificates, persisted in localStorage. They merge with the
 // built-in list in the Certificates section (yours first, with a badge).
@@ -44,7 +45,12 @@ export function MyCertificatesProvider({ children }) {
         return full;
       },
       updateCertificate: (id, patch) => setItems((s) => s.map((c) => (c.id === id ? { ...c, ...patch } : c))),
-      deleteCertificate: (id) => setItems((s) => s.filter((c) => c.id !== id)),
+      deleteCertificate: (id) =>
+        setItems((s) => {
+          const found = s.find((c) => c.id === id);
+          if (found?.attachment?.ref) idbDelete(found.attachment.ref).catch(() => {});
+          return s.filter((c) => c.id !== id);
+        }),
       hiddenIds: hidden,
       hideExample: (id) => setHidden((s) => (s.includes(id) ? s : [...s, id])),
       restoreExamples: () => setHidden([])
