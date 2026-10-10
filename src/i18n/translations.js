@@ -1,0 +1,308 @@
+// EN/ES dictionary. Add more languages by adding a new key + wiring `languages` below.
+export const languages = [
+  { id: 'en', label: 'English', short: 'EN' },
+  { id: 'es', label: 'Español', short: 'ES' }
+];
+
+export const translations = {
+  en: {
+    nav: { about: 'About', projects: 'Projects', skills: 'Skills', snippets: 'Snippets', certs: 'Certificates', contact: 'Contact', settings: 'Settings', install: 'Install', menu: 'menu' },
+    hero: { viewProjects: 'View Projects', installApp: 'Install App', addToDesktop: 'Add to Desktop' },
+    about: {
+      kicker: '// about',
+      title: 'Software engineer, automation nerd.',
+      cards: [
+        { t: 'Full-stack apps', d: 'React + Vite/Tailwind frontends backed by FastAPI or Node APIs. Clean architecture, typed code, real auth and tests.' },
+        { t: 'CLIs & scripts', d: 'Python, Bash and C++ tooling: system utilities, log parsers, generators. Fast, dependency-light, documented.' },
+        { t: 'Docker & Linux', d: 'Multi-service Compose stacks, CI pipelines, hardened images, one-command deploys on any Linux VPS.' }
+      ],
+      cta: 'Currently open to freelance + full-time roles. Reach me at',
+      edit: 'Edit'
+    },
+    projects: {
+      kicker: '// projects',
+      title: 'Projects showcase',
+      search: 'Search projects…',
+      all: 'All',
+      empty: 'No projects match. Try another filter.',
+      featured: 'FEATURED',
+      stars: 'stars',
+      add: 'Add project',
+      mine: 'MINE',
+      delSure: 'Sure? Click again',
+      showExamples: 'Show examples',
+      emptyMine: 'No custom projects yet. Click "Add project" to create your first one.'
+    },
+    projectForm: {
+      addTitle: 'Add my project',
+      editTitle: 'Edit my project',
+      title: 'Title',
+      date: 'Date (day / month / year)',
+      tags: 'Languages / tech tags',
+      customTag: 'Custom tag…',
+      addTag: 'Add',
+      summary: 'Short summary',
+      description: 'Full description',
+      features: 'Features',
+      featuresHint: 'one per line',
+      github: 'GitHub URL (optional)',
+      demo: 'Demo URL (optional)',
+      attach: 'Attach a document (optional, max 50 MB — stored in your browser)',
+      attachRemove: 'Remove attachment',
+      attachTooBig: 'File too big — max 50 MB.',
+      attachStoreFail: 'Could not store the file (browser storage full or blocked). Try a smaller file.',
+      save: 'Save project',
+      saving: 'Saving…',
+      cancel: 'Cancel',
+      required: 'Title and at least one tag are required.'
+    },
+    modal: { features: 'Key features', github: 'View on GitHub', demo: 'Live Demo', close: 'close', attachment: 'Attached document', download: 'Download', attachLoading: 'Loading file…', attachMissing: 'File not found in this browser' },
+    skills: {
+      kicker: '// skills',
+      title: 'Tech stack',
+      groups: { Languages: 'Languages', Frontend: 'Frontend', Backend: 'Backend', DevOps: 'DevOps' }
+    },
+    contact: {
+      kicker: '// contact',
+      title: "Let's build something.",
+      direct: 'Direct links',
+      installBtn: 'Install App / Add to Desktop',
+      pwaNote: 'PWA install works from Chrome/Edge on desktop & mobile. See README for Linux .desktop / Windows shortcut guide.',
+      name: 'Name',
+      email: 'Email',
+      subject: 'Subject',
+      message: 'Tell me about your project…',
+      send: 'Send message',
+      sentBtn: 'Message ready — use email link!',
+      sentNote: 'Demo form — wire to Formspree / Resend / your API. Direct email:'
+    },
+    footer: { built: 'Built with React + Vite + Tailwind', pwa: 'PWA-ready · installable · offline-first' },
+    certs: {
+      kicker: '// certificates',
+      title: 'Certifications',
+      sub: 'Courses and certifications I have completed — with verifiable credentials.',
+      add: 'Add certificate',
+      verify: 'Verify',
+      showExamples: 'Show examples',
+      emptyMine: 'No certificates yet. Click "Add certificate" to add your first one.'
+    },
+    certForm: {
+      addTitle: 'Add my certificate',
+      editTitle: 'Edit my certificate',
+      title: 'Course / certification',
+      issuer: 'Issuer (platform)',
+      date: 'Issue date (day / month / year)',
+      url: 'Credential URL (optional)',
+      credId: 'Credential ID (optional)',
+      skills: 'Related skills',
+      required: 'Title and issuer are required.'
+    },
+    editor: {
+      title: 'Edit my presentation',
+      close: 'close editor',
+      note: 'Changes apply instantly and are saved in this browser. Use Reset to go back to the file defaults.',
+      name: 'Display name',
+      role: 'Role / headline',
+      tagline: 'Tagline',
+      location: 'Location',
+      email: 'Email',
+      github: 'GitHub URL',
+      linkedin: 'LinkedIn URL',
+      language: 'Editing language',
+      aboutTitle: 'About title',
+      card: 'Card',
+      cardTitle: 'Card title',
+      cardDesc: 'Card text',
+      save: 'Save changes',
+      reset: 'Restore defaults',
+      avatar: 'Profile photo',
+      avatarRemove: 'Remove photo',
+      avatarLoading: 'Processing image…',
+      avatarTooBig: 'Image too big — max 10 MB.',
+      avatarBad: 'Could not read that image. Try a JPG or PNG.'
+    },
+    snippets: {
+      kicker: '// snippets',
+      title: 'Copy-paste skills',
+      sub: 'Battle-tested fragments per language. Hit copy and drop them into your project.',
+      search: 'Search snippets…',
+      all: 'All',
+      empty: 'No snippets match. Try another filter.',
+      copy: 'Copy',
+      copied: 'Copied!',
+      copyManual: 'Blocked — code selected, press Ctrl+C',
+      pick: 'Choose a language to see its snippets',
+      view: 'View',
+      back: 'Languages',
+      count: 'snippets'
+    },
+    settings: {
+      title: 'Settings',
+      close: 'close settings',
+      theme: 'Theme',
+      dark: 'Dark',
+      light: 'Light',
+      system: 'System',
+      accent: 'Accent color',
+      interface: 'Interface',
+      animations: 'Enable animations',
+      compact: 'Compact grid mode',
+      reset: 'Reset to defaults',
+      persist: 'Preferences persist in localStorage.',
+      language: 'Language',
+      accents: { emerald: 'Emerald', cyan: 'Cyber Cyan', purple: 'Neon Purple', amber: 'Amber', rose: 'Rose', blue: 'Ocean Blue' }
+    }
+  },
+  es: {
+    nav: { about: 'Sobre mí', projects: 'Proyectos', skills: 'Habilidades', snippets: 'Snippets', certs: 'Certificados', contact: 'Contacto', settings: 'Ajustes', install: 'Instalar', menu: 'menú' },
+    hero: { viewProjects: 'Ver proyectos', installApp: 'Instalar app', addToDesktop: 'Añadir al escritorio' },
+    about: {
+      kicker: '// sobre-mí',
+      title: 'Ingeniero de software, fan de la automatización.',
+      cards: [
+        { t: 'Apps full-stack', d: 'Frontends con React + Vite/Tailwind respaldados por APIs en FastAPI o Node. Arquitectura limpia, código tipado, auth real y tests.' },
+        { t: 'CLIs y scripts', d: 'Herramientas en Python, Bash y C++: utilidades de sistema, parsers de logs, generadores. Rápidas, ligeras y documentadas.' },
+        { t: 'Docker y Linux', d: 'Stacks multi-servicio con Compose, pipelines de CI, imágenes endurecidas y despliegues con un solo comando en cualquier VPS Linux.' }
+      ],
+      cta: 'Disponible para freelance y tiempo completo. Escríbeme a',
+      edit: 'Editar'
+    },
+    projects: {
+      kicker: '// proyectos',
+      title: 'Muestra de proyectos',
+      search: 'Buscar proyectos…',
+      all: 'Todos',
+      empty: 'Sin resultados. Prueba con otro filtro.',
+      featured: 'DESTACADO',
+      stars: 'estrellas',
+      add: 'Agregar proyecto',
+      mine: 'MÍO',
+      delSure: '¿Seguro? Clic de nuevo',
+      showExamples: 'Mostrar ejemplos',
+      emptyMine: 'Aún no tienes proyectos propios. Pulsa "Agregar proyecto" para crear el primero.'
+    },
+    projectForm: {
+      addTitle: 'Agregar mi proyecto',
+      editTitle: 'Editar mi proyecto',
+      title: 'Título',
+      date: 'Fecha (día / mes / año)',
+      tags: 'Lenguajes / etiquetas tech',
+      customTag: 'Etiqueta personalizada…',
+      addTag: 'Añadir',
+      summary: 'Resumen corto',
+      description: 'Descripción completa',
+      features: 'Características',
+      featuresHint: 'una por línea',
+      github: 'URL de GitHub (opcional)',
+      demo: 'URL de demo (opcional)',
+      attach: 'Adjuntar documento (opcional, máx 50 MB — se guarda en tu navegador)',
+      attachRemove: 'Quitar adjunto',
+      attachTooBig: 'Archivo muy grande — máx 50 MB.',
+      attachStoreFail: 'No se pudo guardar el archivo (almacenamiento lleno o bloqueado). Prueba con uno más pequeño.',
+      save: 'Guardar proyecto',
+      saving: 'Guardando…',
+      cancel: 'Cancelar',
+      required: 'Título y al menos una etiqueta son obligatorios.'
+    },
+    modal: { features: 'Características clave', github: 'Ver en GitHub', demo: 'Demo en vivo', close: 'cerrar', attachment: 'Documento adjunto', download: 'Descargar', attachLoading: 'Cargando archivo…', attachMissing: 'Archivo no encontrado en este navegador' },
+    skills: {
+      kicker: '// habilidades',
+      title: 'Stack tecnológico',
+      groups: { Languages: 'Lenguajes', Frontend: 'Frontend', Backend: 'Backend', DevOps: 'DevOps' }
+    },
+    contact: {
+      kicker: '// contacto',
+      title: 'Construyamos algo.',
+      direct: 'Enlaces directos',
+      installBtn: 'Instalar app / Añadir al escritorio',
+      pwaNote: 'La instalación PWA funciona desde Chrome/Edge en escritorio y móvil. Ver README para guía .desktop en Linux / acceso directo en Windows.',
+      name: 'Nombre',
+      email: 'Correo',
+      subject: 'Asunto',
+      message: 'Cuéntame sobre tu proyecto…',
+      send: 'Enviar mensaje',
+      sentBtn: 'Mensaje listo — ¡usa el enlace de correo!',
+      sentNote: 'Formulario demo — conéctalo a Formspree / Resend / tu API. Correo directo:'
+    },
+    footer: { built: 'Hecho con React + Vite + Tailwind', pwa: 'PWA lista · instalable · offline' },
+    certs: {
+      kicker: '// certificados',
+      title: 'Certificaciones',
+      sub: 'Cursos y certificaciones que he completado — con credenciales verificables.',
+      add: 'Agregar certificado',
+      verify: 'Verificar',
+      showExamples: 'Mostrar ejemplos',
+      emptyMine: 'Aún no hay certificados. Pulsa "Agregar certificado" para añadir el primero.'
+    },
+    certForm: {
+      addTitle: 'Agregar mi certificado',
+      editTitle: 'Editar mi certificado',
+      title: 'Curso / certificación',
+      issuer: 'Emisor (plataforma)',
+      date: 'Fecha de emisión (día / mes / año)',
+      url: 'URL de credencial (opcional)',
+      credId: 'ID de credencial (opcional)',
+      skills: 'Habilidades relacionadas',
+      required: 'Título y emisor son obligatorios.'
+    },
+    editor: {
+      title: 'Editar mi presentación',
+      close: 'cerrar editor',
+      note: 'Los cambios aplican al instante y se guardan en este navegador. Usa Restablecer para volver a los valores de los archivos.',
+      name: 'Nombre a mostrar',
+      role: 'Rol / titular',
+      tagline: 'Descripción corta',
+      location: 'Ubicación',
+      email: 'Correo',
+      github: 'URL de GitHub',
+      linkedin: 'URL de LinkedIn',
+      language: 'Idioma en edición',
+      aboutTitle: 'Título del sobre mí',
+      card: 'Tarjeta',
+      cardTitle: 'Título de tarjeta',
+      cardDesc: 'Texto de tarjeta',
+      save: 'Guardar cambios',
+      reset: 'Restablecer valores',
+      avatar: 'Foto de perfil',
+      avatarRemove: 'Quitar foto',
+      avatarLoading: 'Procesando imagen…',
+      avatarTooBig: 'Imagen muy grande — máx 10 MB.',
+      avatarBad: 'No se pudo leer esa imagen. Prueba con JPG o PNG.'
+    },
+    snippets: {
+      kicker: '// snippets',
+      title: 'Skills para copiar y pegar',
+      sub: 'Fragmentos probados por lenguaje. Cópialos y pégalos en tu proyecto.',
+      search: 'Buscar fragmentos…',
+      all: 'Todos',
+      empty: 'Sin fragmentos. Prueba con otro filtro.',
+      copy: 'Copiar',
+      copied: '¡Copiado!',
+      copyManual: 'Bloqueado — código seleccionado, pulsa Ctrl+C',
+      pick: 'Elige un lenguaje para ver sus fragmentos',
+      view: 'Ver',
+      back: 'Lenguajes',
+      count: 'fragmentos'
+    },
+    settings: {
+      title: 'Ajustes',
+      close: 'cerrar ajustes',
+      theme: 'Tema',
+      dark: 'Oscuro',
+      light: 'Claro',
+      system: 'Sistema',
+      accent: 'Color de acento',
+      interface: 'Interfaz',
+      animations: 'Activar animaciones',
+      compact: 'Modo cuadrícula compacta',
+      reset: 'Restablecer valores',
+      persist: 'Las preferencias se guardan en localStorage.',
+      language: 'Idioma',
+      accents: { emerald: 'Esmeralda', cyan: 'Cian cyber', purple: 'Púrpura neón', amber: 'Ámbar', rose: 'Rosa', blue: 'Azul océano' }
+    }
+  }
+};
+
+export function getLocale(lang) {
+  return translations[lang] || translations.en;
+}
