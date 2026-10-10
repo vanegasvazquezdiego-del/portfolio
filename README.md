@@ -111,7 +111,11 @@ nativefier --name "AlexDev Portfolio" "https://you.github.io/portfolio/" --platf
 
 ## 5. Deploy
 
-Any static host: Vercel, Netlify, GitHub Pages, Cloudflare Pages. Build output is `dist/`. Make sure `manifest.webmanifest`, `sw.js`, icons are served from root and the site is HTTPS.
+**GitHub Pages (activo, automático):** https://vanegasvazquezdiego-del.github.io/portfolio/
+Cada `push` a `main` reconstruye y publica vía `.github/workflows/deploy.yml` — sin terminal.
+Para actualizar: edita, `git commit` y `git push` (o edita directo en github.com).
+
+**Otras opciones:** cualquier host estático (Vercel, Netlify, Cloudflare Pages) sirve `dist/`. El proyecto usa rutas relativas (`base: './'`), así que funciona en subrutas (`/user/repo/`), dominios propios y localhost sin cambios. Siempre HTTPS para el install prompt PWA.
 
 ## Notes
 
